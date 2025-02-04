@@ -1,6 +1,6 @@
 # BBCodeEdit (for script editor[^editor_only])
 
-![alt text](/icon.svg)
+![Addon's icon](/icon.svg)
 
 A Godot addon that brings BBCode completion and QOL tools to the script editor
 in order to help format documentation comments.
@@ -78,7 +78,7 @@ Some useful **snippets** are included:
 - [ ] Add an external CodeEdit in the editor to write bbcode, because completion inside strings is a nightmare due to builtin behaviors.[^editor_only]
 
 
-## Intallation
+## Installation
 
 You can download the addon:
 - On GitHub: `Code` → `Download ZIP`.
