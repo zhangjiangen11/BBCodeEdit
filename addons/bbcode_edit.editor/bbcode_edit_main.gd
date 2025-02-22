@@ -7,12 +7,13 @@ const Scraper = preload("res://addons/bbcode_edit.editor/editor_interface_scrape
 
 
 const ADDON_NAME = "BBCode Editor"
+const ACTION_OPEN_DOC = &"bbcode_edit/editor/open_current_file_documentation"
 const ACTION_SETTINGS: Array[StringName] = [
-	&"input/bbcode_edit/editor/open_current_file_documentation",
-	&"input/bbcode_edit/toggle_bold",
-	&"input/bbcode_edit/toggle_italic",
-	&"input/bbcode_edit/toggle_underline",
-	&"input/bbcode_edit/toggle_strike",
+	"input/" + ACTION_OPEN_DOC,
+	"input/" + BBCodeEdit.ACTION_TOGGLE_BOLD,
+	"input/" + BBCodeEdit.ACTION_TOGGLE_ITALIC,
+	"input/" + BBCodeEdit.ACTION_TOGGLE_UNDERLINE,
+	"input/" + BBCodeEdit.ACTION_TOGGLE_STRIKE,
 ]
 
 
@@ -131,7 +132,7 @@ func add_editor_keybinds() -> void:
 	open_current_file_documentation.shift_pressed = true
 	open_current_file_documentation.keycode = 4194332
 	ProjectSettings.set_setting(
-		&"input/bbcode_edit/editor/open_current_file_documentation",
+		"input/" + ACTION_OPEN_DOC,
 		{
 			"deadzone": 0.5,
 			"events": [open_current_file_documentation],
@@ -143,17 +144,17 @@ func add_editor_keybinds() -> void:
 
 
 func remove_keybinds() -> void:
-	ProjectSettings.set_setting(&"input/bbcode_edit/toggle_bold", null)
-	ProjectSettings.set_setting(&"input/bbcode_edit/toggle_italic", null)
-	ProjectSettings.set_setting(&"input/bbcode_edit/toggle_underline", null)
-	ProjectSettings.set_setting(&"input/bbcode_edit/toggle_strike", null)
+	ProjectSettings.set_setting("input/" + BBCodeEdit.ACTION_TOGGLE_BOLD, null)
+	ProjectSettings.set_setting("input/" + BBCodeEdit.ACTION_TOGGLE_ITALIC, null)
+	ProjectSettings.set_setting("input/" + BBCodeEdit.ACTION_TOGGLE_UNDERLINE, null)
+	ProjectSettings.set_setting("input/" + BBCodeEdit.ACTION_TOGGLE_STRIKE, null)
 	
 	# This calls ProjectSettings.save(), so please call it last
 	remove_editor_keybinds()
 
 
 func remove_editor_keybinds() -> void:
-	ProjectSettings.set_setting(&"input/bbcode_edit/editor/open_current_file_documentation", null)
+	ProjectSettings.set_setting("input/" + ACTION_OPEN_DOC, null)
 	ProjectSettings.save()
 
 
@@ -201,7 +202,10 @@ func open_doc(script: Script, code_edit: CodeEdit = null) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if InputMap.event_is_action(event, "bbcode_edit/editor/open_current_file_documentation", true):
+	if (
+		InputMap.has_action(ACTION_OPEN_DOC)
+		and InputMap.event_is_action(event, ACTION_OPEN_DOC, true)
+	):
 		# TODO find a workaround for the appearance delay of (*) to check unsaved status.
 		var current_editor := EditorInterface.get_script_editor().get_current_editor()
 		if current_editor == null:
