@@ -48,6 +48,8 @@ func _on_editor_startup() -> void:
 	
 	# TODO check if InputMap.load_from_project_settings() is better
 	for setting in ACTION_SETTINGS:
+		if !ProjectSettings.has_setting(setting):
+			continue
 		var action_dict: Dictionary = ProjectSettings.get_setting(setting)
 		var action_name: StringName = setting.substr(6)
 		InputMap.add_action(action_name, action_dict["deadzone"])
