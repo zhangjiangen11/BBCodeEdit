@@ -87,8 +87,10 @@ You can download the addon:
 *By default, this readme is included, along with it's illustrations. If you don't want them,
 do not download `addons/bbcode_edit.editor/README.md` nor `addons/bbcode_edit.editor/.assets_for_readme/*`*
 
-To edit shortcuts, first restart the editor, then modify them,
-and restart the editor so that Godot updates the input map.
+To edit shortcuts:
+- *If they don't show up* in the input map GUI: first restart the editor
+- modify them in the input map GUI
+- **restart** the editor to update the input map.
 
 You can also exclude `*.editor/*` or `bbcode_edit.editor/` from your export presets,
 because this addon is (for now[^editor_only]) script-editor-only.

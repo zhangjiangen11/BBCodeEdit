@@ -18,6 +18,18 @@ enum CompletionKind {
 const Completions = preload("res://addons/bbcode_edit.editor/completions_db/completions.gd")
 const Scraper = preload("res://addons/bbcode_edit.editor/editor_interface_scraper.gd")
 
+const ACTION_TOGGLE_BOLD = &"bbcode_edit/toggle_bold"
+const ACTION_TOGGLE_ITALIC = &"bbcode_edit/toggle_italic"
+const ACTION_TOGGLE_UNDERLINE = &"bbcode_edit/toggle_underline"
+const ACTION_TOGGLE_STRIKE = &"bbcode_edit/toggle_strike"
+
+const TOGGLING_ACTIONS = {
+	ACTION_TOGGLE_BOLD: "b",
+	ACTION_TOGGLE_ITALIC: "i",
+	ACTION_TOGGLE_UNDERLINE: "u",
+	ACTION_TOGGLE_STRIKE: "s",
+}
+
 const BBCODE_COMPLETION_ICON = preload("res://addons/bbcode_edit.editor/bbcode_completion_icon.svg")
 const COLOR_PICKER_CONTAINER_PATH = ^"_BBCodeEditColorPicker"
 const COLOR_PICKER_PATH = ^"_BBCodeEditColorPicker/ColorPicker"
@@ -832,14 +844,13 @@ func _gui_input(event: InputEvent) -> void:
 		if event is InputEventKey or event is InputEventMouseButton:
 			get_node(COLOR_PICKER_CONTAINER_PATH).free()
 	
-	if event.is_action(&"bbcode_edit/toggle_bold", true):
-		toggle_tag("b")
-	elif event.is_action(&"bbcode_edit/toggle_italic", true):
-		toggle_tag("i")
-	elif event.is_action(&"bbcode_edit/toggle_underline", true):
-		toggle_tag("u")
-	elif event.is_action(&"bbcode_edit/toggle_strike", true):
-		toggle_tag("s")
+	for action in TOGGLING_ACTIONS:
+		if is_action(event, action):
+			toggle_tag(TOGGLING_ACTIONS[action])
+
+
+func is_action(event: InputEvent, action: StringName) -> bool:
+	return InputMap.has_action(action) and event.is_action(action, true)
 
 
 func _on_text_changed() -> void:
