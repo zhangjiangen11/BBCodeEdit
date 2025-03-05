@@ -8,6 +8,10 @@
 
 config_version=5
 
+[addons]
+
+bbcode_edit/editor/dont_ask_to_fetch_builtin_classes=false
+
 [application]
 
 config/name="BBCodeEdit"

@@ -3,6 +3,7 @@ extends EditorPlugin
 
 
 const BBCodeEdit: GDScript = preload("res://addons/bbcode_edit.editor/bbcode_edit.gd")
+const Completions = preload("res://addons/bbcode_edit.editor/completions_db/completions.gd")
 const Scraper = preload("res://addons/bbcode_edit.editor/editor_interface_scraper.gd")
 
 
@@ -21,7 +22,7 @@ func _enable_plugin() -> void:
 	print("Enabling ", ADDON_NAME)
 	add_keybinds()
 	_on_editor_startup.call_deferred()
-	add_tool_menu_item("BBCodeEdit: Fetch Builtin Classes", fetch_builtin_classes)
+	add_tool_menu_item("BBCodeEdit: Fetch Builtin Classes", Completions.fetch_builtin_classes)
 	print("Enabled ", ADDON_NAME)
 
 
@@ -33,6 +34,7 @@ func _disable_plugin() -> void:
 	remove_keybinds()
 	for setting in ACTION_SETTINGS:
 		InputMap.erase_action(setting.substr(6))
+	ProjectSettings.set_setting(Completions.DONT_ASK_TO_FETCH_SETTING_PATH, null)
 	print("Disabled ", ADDON_NAME)
 
 
@@ -218,7 +220,3 @@ func _unhandled_input(event: InputEvent) -> void:
 		var code_edit := current_editor.get_base_editor()
 		if code_edit is CodeEdit:
 			open_doc(EditorInterface.get_script_editor().get_current_script(), code_edit)
-
-
-func fetch_builtin_classes() -> void:
-	EditorInterface.play_custom_scene("res://addons/bbcode_edit.editor/completions_db/fetch_builtin_classes.tscn")

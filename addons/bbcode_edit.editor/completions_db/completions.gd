@@ -1,8 +1,10 @@
 extends Object
 
+const DONT_ASK_TO_FETCH_SETTING_PATH = "addons/bbcode_edit/editor/dont_ask_to_fetch_builtin_classes"
 
 const GodotVersion = preload("res://addons/bbcode_edit.editor/completions_db/godot_version.gd")
 const Scraper = preload("res://addons/bbcode_edit.editor/editor_interface_scraper.gd")
+
 
 
 static var _BUILTIN_COMPLETIONS_PATH: String
@@ -208,20 +210,43 @@ const COLORS: Array[StringName] = [
 ]
 
 
-static var _BUILTIN_CLASSES = PackedStringArray()
+static var _BUILTIN_CLASSES: PackedStringArray = PackedStringArray()
 
 
 static func get_builtin_classes() -> PackedStringArray:
-	if not _BUILTIN_CLASSES:
-		var file: FileAccess = FileAccess.open(get_builtin_completions_path(), FileAccess.READ)
-		if FileAccess.get_open_error():
-			push_error(
-				"Failed to open "
-				+ get_builtin_completions_path()
-				+ ", error is:"
-				+ error_string(FileAccess.get_open_error())
+	if _BUILTIN_CLASSES.is_empty():
+		if FileAccess.file_exists(get_builtin_completions_path()):
+			var file: FileAccess = FileAccess.open(get_builtin_completions_path(), FileAccess.READ)
+			
+			if FileAccess.get_open_error():
+				push_error(
+					"Failed to open "
+					+ get_builtin_completions_path()
+					+ ", error is:"
+					+ error_string(FileAccess.get_open_error())
+				)
+			else:
+				_BUILTIN_CLASSES = file.get_as_text().split("\n")
+		elif !ProjectSettings.get_setting(DONT_ASK_TO_FETCH_SETTING_PATH):
+			var dialog: AcceptDialog = AcceptDialog.new()
+			dialog.title = "BBCodeEdit"
+			dialog.dialog_text = (
+				"Builtin classes are not cached for version "
+				+ GodotVersion.get_short_string()
+				+ " of Godot."
+				+ "\n\nDo you want to fetch them? It should take less than 15 seconds."
+				+ "\n\n(This will play a scene that will close automatically once the work is done)"
 			)
-		_BUILTIN_CLASSES = file.get_as_text().split("\n")
+			dialog.ok_button_text = "Fetch builtin classes"
+			dialog.add_cancel_button("No, and don't ask again")
+			dialog.confirmed.connect(fetch_builtin_classes)
+			dialog.canceled.connect(
+				ProjectSettings.set_setting.bind(
+					DONT_ASK_TO_FETCH_SETTING_PATH,
+					true
+				)
+			)
+			EditorInterface.popup_dialog_centered(dialog)
 	return _BUILTIN_CLASSES
 
 
@@ -266,6 +291,11 @@ static func get_class_completions() -> ClassCompletions:
 		class_names,
 		icons,
 	)
+
+
+static func fetch_builtin_classes() -> void:
+	EditorInterface.play_custom_scene("res://addons/bbcode_edit.editor/completions_db/fetch_builtin_classes.tscn")
+
 
 
 class ClassCompletions:
