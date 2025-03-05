@@ -1,6 +1,7 @@
 extends Object
 
 
+const GodotVersion = preload("res://addons/bbcode_edit.editor/completions_db/godot_version.gd")
 const Scraper = preload("res://addons/bbcode_edit.editor/editor_interface_scraper.gd")
 
 
@@ -8,11 +9,13 @@ static var _BUILTIN_COMPLETIONS_PATH: String
 static func get_builtin_completions_path() -> String:
 	if _BUILTIN_COMPLETIONS_PATH:
 		return _BUILTIN_COMPLETIONS_PATH
+	
 	_BUILTIN_COMPLETIONS_PATH = (
 		"res://addons/bbcode_edit.editor/completions_db/builtin_classes_"
-		+ Engine.get_version_info().string
+		+ GodotVersion.get_short_string()
 		+ ".txt"
 	)
+	
 	return _BUILTIN_COMPLETIONS_PATH 
 
 
