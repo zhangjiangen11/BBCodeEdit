@@ -22,13 +22,11 @@ func _enable_plugin() -> void:
 	print("Enabling ", ADDON_NAME)
 	add_keybinds()
 	_on_editor_startup.call_deferred()
-	add_tool_menu_item("BBCodeEdit: Fetch Builtin Classes", Completions.fetch_builtin_classes)
 	print("Enabled ", ADDON_NAME)
 
 
 func _disable_plugin() -> void:
 	print("Disabling ", ADDON_NAME)
-	remove_tool_menu_item("BBCodeEdit: Fetch Builtin Classes")
 	for editor in EditorInterface.get_script_editor().get_open_script_editors():
 		editor.get_base_editor().set_script(null)
 	remove_keybinds()
@@ -42,6 +40,11 @@ func _enter_tree() -> void:
 	if not EditorInterface.has_meta(&"bbcode_edit_saved_once"):
 		EditorInterface.set_meta(&"bbcode_edit_saved_once", PackedStringArray())
 	_on_editor_startup.call_deferred()
+	add_tool_menu_item("BBCodeEdit: Fetch Builtin Classes", Completions.fetch_builtin_classes)
+
+
+func _exit_tree() -> void:
+	remove_tool_menu_item("BBCodeEdit: Fetch Builtin Classes")
 
 
 var started_up: bool = false
