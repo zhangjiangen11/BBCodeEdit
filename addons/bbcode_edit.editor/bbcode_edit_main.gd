@@ -21,11 +21,13 @@ func _enable_plugin() -> void:
 	print("Enabling ", ADDON_NAME)
 	add_keybinds()
 	_on_editor_startup.call_deferred()
+	add_tool_menu_item("BBCodeEdit: Fetch Builtin Classes", fetch_builtin_classes)
 	print("Enabled ", ADDON_NAME)
 
 
 func _disable_plugin() -> void:
 	print("Disabling ", ADDON_NAME)
+	remove_tool_menu_item("BBCodeEdit: Fetch Builtin Classes")
 	for editor in EditorInterface.get_script_editor().get_open_script_editors():
 		editor.get_base_editor().set_script(null)
 	remove_keybinds()
@@ -216,3 +218,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		var code_edit := current_editor.get_base_editor()
 		if code_edit is CodeEdit:
 			open_doc(EditorInterface.get_script_editor().get_current_script(), code_edit)
+
+
+func fetch_builtin_classes() -> void:
+	EditorInterface.play_custom_scene("res://addons/bbcode_edit.editor/completions_db/fetch_builtin_classes.tscn")
