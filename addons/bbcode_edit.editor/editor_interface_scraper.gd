@@ -101,7 +101,7 @@ static func get_type_icon(value: Variant, fallback: StringName) -> Texture2D:
 static func is_current_script_unsaved() -> bool:
 	# Reference path: $"../../../../../../@VSplitContainer@9820/@VBoxContainer@9821/@ItemList@9824"
 	var current_editor := EditorInterface.get_script_editor().get_current_editor().get_base_editor()
-	if current_editor is not CodeEdit:
+	if not current_editor is CodeEdit:
 		return false
 	
 	var pointer: Node = current_editor.get_node(^"../../../../../..")
