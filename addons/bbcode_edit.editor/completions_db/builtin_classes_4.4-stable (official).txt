@@ -20,6 +20,7 @@ AnimationNodeBlend3
 AnimationNodeBlendSpace1D
 AnimationNodeBlendSpace2D
 AnimationNodeBlendTree
+AnimationNodeExtension
 AnimationNodeOneShot
 AnimationNodeOutput
 AnimationNodeStateMachine
@@ -155,6 +156,7 @@ CollisionPolygon2D
 CollisionPolygon3D
 CollisionShape2D
 CollisionShape3D
+ColorPalette
 ColorPicker
 ColorPickerButton
 ColorRect
@@ -197,10 +199,12 @@ ENetConnection
 ENetMultiplayerPeer
 ENetPacketPeer
 EditorCommandPalette
+EditorContextMenuPlugin
 EditorDebuggerPlugin
 EditorDebuggerSession
 EditorExportPlatform
 EditorExportPlatformAndroid
+EditorExportPlatformExtension
 EditorExportPlatformIOS
 EditorExportPlatformLinuxBSD
 EditorExportPlatformMacOS
@@ -208,6 +212,7 @@ EditorExportPlatformPC
 EditorExportPlatformWeb
 EditorExportPlatformWindows
 EditorExportPlugin
+EditorExportPreset
 EditorFeatureProfile
 EditorFileDialog
 EditorFileSystem
@@ -240,6 +245,7 @@ EditorSelection
 EditorSettings
 EditorSpinSlider
 EditorSyntaxHighlighter
+EditorToaster
 EditorTranslationParserPlugin
 EditorUndoRedoManager
 EditorVCSInterface
@@ -249,6 +255,7 @@ EngineDebugger
 EngineProfiler
 Environment
 Expression
+ExternalTexture
 FBXDocument
 FBXState
 FastNoiseLite
@@ -267,6 +274,7 @@ GDExtensionManager
 GDScript
 GDScriptEditorTranslationParserPlugin
 GDScriptNativeClass
+GDScriptSyntaxHighlighter
 GLTFAccessor
 GLTFAnimation
 GLTFBufferView
@@ -280,6 +288,7 @@ GLTFDocumentExtensionTextureWebP
 GLTFLight
 GLTFMesh
 GLTFNode
+GLTFObjectModelProperty
 GLTFPhysicsBody
 GLTFPhysicsShape
 GLTFSkeleton
@@ -315,6 +324,7 @@ GraphFrame
 GraphNode
 GridContainer
 GridMap
+GridMapEditorPlugin
 GrooveJoint2D
 HBoxContainer
 HFlowContainer
@@ -329,7 +339,7 @@ HashingContext
 HeightMapShape3D
 HingeJoint3D
 IP
-IPUnix
+IPWindows
 Image
 ImageFormatLoader
 ImageFormatLoaderExtension
@@ -366,6 +376,7 @@ JSON
 JSONRPC
 JavaClass
 JavaClassWrapper
+JavaObject
 JavaScriptBridge
 JavaScriptObject
 Joint2D
@@ -386,6 +397,7 @@ LightmapperRD
 Line2D
 LineEdit
 LinkButton
+LookAtModifier3D
 MainLoop
 MarginContainer
 Marker2D
@@ -459,18 +471,29 @@ OggPacketSequencePlayback
 OmniLight3D
 OpenXRAPIExtension
 OpenXRAction
+OpenXRActionBindingModifier
 OpenXRActionMap
 OpenXRActionSet
+OpenXRAnalogThresholdModifier
+OpenXRBindingModifier
+OpenXRBindingModifierEditor
 OpenXRCompositionLayer
 OpenXRCompositionLayerCylinder
 OpenXRCompositionLayerEquirect
 OpenXRCompositionLayerQuad
+OpenXRDpadBindingModifier
 OpenXRExtensionWrapperExtension
 OpenXRHand
+OpenXRHapticBase
+OpenXRHapticVibration
 OpenXRIPBinding
+OpenXRIPBindingModifier
 OpenXRInteractionProfile
+OpenXRInteractionProfileEditor
+OpenXRInteractionProfileEditorBase
 OpenXRInteractionProfileMetadata
 OpenXRInterface
+OpenXRVisibilityMask
 OptimizedTranslation
 OptionButton
 PCKPacker
@@ -618,12 +641,14 @@ ResourceLoader
 ResourcePreloader
 ResourceSaver
 ResourceUID
+RetargetModifier3D
 RibbonTrailMesh
 RichTextEffect
 RichTextLabel
 RigidBody2D
 RigidBody3D
 RootMotionView
+RuntimeNodeSelect
 SceneCacheInterface
 SceneMultiplayer
 SceneRPCInterface
@@ -649,6 +674,7 @@ Separator
 Shader
 ShaderGlobalsOverride
 ShaderInclude
+ShaderIncludeDB
 ShaderMaterial
 Shape2D
 Shape3D
@@ -683,6 +709,11 @@ SpinBox
 SplitContainer
 SpotLight3D
 SpringArm3D
+SpringBoneCollision3D
+SpringBoneCollisionCapsule3D
+SpringBoneCollisionPlane3D
+SpringBoneCollisionSphere3D
+SpringBoneSimulator3D
 Sprite2D
 Sprite3D
 SpriteBase3D
@@ -704,6 +735,7 @@ StyleBoxLine
 StyleBoxTexture
 SubViewport
 SubViewportContainer
+SubtweenTweener
 SurfaceTool
 SyntaxHighlighter
 SystemFont
@@ -751,6 +783,7 @@ Timer
 TorusMesh
 TouchScreenButton
 Translation
+TranslationDomain
 TranslationServer
 Tree
 TreeItem
@@ -775,6 +808,7 @@ VideoStream
 VideoStreamPlayback
 VideoStreamPlayer
 VideoStreamTheora
+ViewPanner
 Viewport
 ViewportTexture
 VisibleOnScreenEnabler2D

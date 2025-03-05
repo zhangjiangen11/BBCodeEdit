@@ -9,15 +9,15 @@ const Completions = preload("res://addons/bbcode_edit.editor/completions_db/comp
 
 func _ready() -> void:
 	print("Fetching classes...")
-	var file: FileAccess = FileAccess.open(Completions.PATH_BUILTIN_COMPLETIONS, FileAccess.WRITE)
+	var file: FileAccess = FileAccess.open(Completions.get_builtin_completions_path(), FileAccess.WRITE)
 	if FileAccess.get_open_error():
 		push_error(
 			"Failed to open "
-			+ Completions.PATH_BUILTIN_COMPLETIONS
+			+ Completions.get_builtin_completions_path()
 			+ ", error is:"
 			+ error_string(FileAccess.get_open_error())
 		)
 		return
 	file.store_string("\n".join(ClassDB.get_class_list()))
-	print_rich("[color=web_green]Classes successfuly pasted to clipboard")
+	print_rich("[color=web_green]Classes successfuly saved to " + file.get_path())
 	get_tree().quit()

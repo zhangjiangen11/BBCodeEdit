@@ -4,7 +4,16 @@ extends Object
 const Scraper = preload("res://addons/bbcode_edit.editor/editor_interface_scraper.gd")
 
 
-const PATH_BUILTIN_COMPLETIONS = "res://addons/bbcode_edit.editor/completions_db/builtin_classes.txt"
+static var _BUILTIN_COMPLETIONS_PATH: String
+static func get_builtin_completions_path() -> String:
+	if _BUILTIN_COMPLETIONS_PATH:
+		return _BUILTIN_COMPLETIONS_PATH
+	_BUILTIN_COMPLETIONS_PATH = (
+		"res://addons/bbcode_edit.editor/completions_db/builtin_classes_"
+		+ Engine.get_version_info().string
+		+ ".txt"
+	)
+	return _BUILTIN_COMPLETIONS_PATH 
 
 
 # TODO add all tags and classify them between Documentation Only, Documentation Forbidden, Universal
@@ -201,11 +210,11 @@ static var _BUILTIN_CLASSES = PackedStringArray()
 
 static func get_builtin_classes() -> PackedStringArray:
 	if not _BUILTIN_CLASSES:
-		var file: FileAccess = FileAccess.open(PATH_BUILTIN_COMPLETIONS, FileAccess.READ)
+		var file: FileAccess = FileAccess.open(get_builtin_completions_path(), FileAccess.READ)
 		if FileAccess.get_open_error():
 			push_error(
 				"Failed to open "
-				+ PATH_BUILTIN_COMPLETIONS
+				+ get_builtin_completions_path()
 				+ ", error is:"
 				+ error_string(FileAccess.get_open_error())
 			)
