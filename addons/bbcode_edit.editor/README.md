@@ -87,6 +87,8 @@ You can download the addon:
 *By default, this readme is included, along with it's illustrations. If you don't want them,
 do not download `addons/bbcode_edit.editor/README.md` nor `addons/bbcode_edit.editor/.assets_for_readme/*`*
 
+*You can also remove `addons/bbcode_edit.editor/completions_cd/builtin_classes_[godot versions that you don't use].txt`*
+
 To edit shortcuts:
 - *If they don't show up* in the input map GUI: first restart the editor
 - modify them in the input map GUI
@@ -98,12 +100,13 @@ because this addon is (for now[^editor_only]) script-editor-only.
 
 ## Godot version
 
-Godot 4.3 (May work with previous 4.x versions)
+Godot 4.3
+[WIP 4.2 branch](https://github.com/xorblo-doitus/BBCodeEdit/tree/4.2.2-port)
 
 
 # Development Status
 
-Development halted. But the addon is really handy as-is.
+<abbr title="Long Term Support">LTS</abbr>, no major updates. But the addon is really handy as-is.
 
 [^editor_only]: **Note:** All non-script-editor-related features are on hold for now
   because I don't have the time nor the need to implement them.
