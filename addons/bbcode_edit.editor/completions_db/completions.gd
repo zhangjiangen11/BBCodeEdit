@@ -309,6 +309,7 @@ static func fetch_builtin_classes() -> void:
 		)
 	else:
 		file.store_string("\n".join(_BUILTIN_CLASSES))
+		print_rich("[color=web_green]Filtered classes successfuly")
 
 
 class ClassCompletions:
