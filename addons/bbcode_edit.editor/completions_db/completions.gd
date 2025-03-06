@@ -295,7 +295,20 @@ static func get_class_completions() -> ClassCompletions:
 
 static func fetch_builtin_classes() -> void:
 	EditorInterface.play_custom_scene("res://addons/bbcode_edit.editor/completions_db/fetch_builtin_classes.tscn")
-
+	while EditorInterface.is_playing_scene():
+		await EditorInterface.get_base_control().get_tree().create_timer(0.1, true, false, true).timeout
+	
+	_BUILTIN_CLASSES = (get_builtin_classes() as Array[String]).filter(ClassDB.class_exists)
+	var file := FileAccess.open(get_builtin_completions_path(), FileAccess.WRITE)
+	if FileAccess.get_open_error():
+		push_error(
+			"Failed to open "
+			+ get_builtin_completions_path()
+			+ ", error is:"
+			+ error_string(FileAccess.get_open_error())
+		)
+	else:
+		file.store_string("\n".join(_BUILTIN_CLASSES))
 
 
 class ClassCompletions:
