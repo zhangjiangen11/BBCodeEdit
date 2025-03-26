@@ -1,10 +1,15 @@
 extends Object
 
-const DONT_ASK_TO_FETCH_SETTING_PATH = "addons/bbcode_edit/editor/dont_ask_to_fetch_builtin_classes"
 
 const GodotVersion = preload("res://addons/bbcode_edit.editor/completions_db/godot_version.gd")
 const Scraper = preload("res://addons/bbcode_edit.editor/editor_interface_scraper.gd")
 
+const _BUILTIN_COMPLETIONS_PATH_BEGINING = "res://addons/bbcode_edit.editor/completions_db/builtin_classes_"
+const DONT_ASK_TO_FETCH_SETTING_PATH = "addons/bbcode_edit/editor/dont_ask_to_fetch_builtin_classes"
+
+const equivalent_versions: Dictionary = {
+	"4.4.1": "4.4"
+}
 
 
 static var _BUILTIN_COMPLETIONS_PATH: String
@@ -12,9 +17,13 @@ static func get_builtin_completions_path() -> String:
 	if _BUILTIN_COMPLETIONS_PATH:
 		return _BUILTIN_COMPLETIONS_PATH
 	
+	var version_string: String = GodotVersion.get_short_string()
+	if version_string in equivalent_versions:
+		version_string = equivalent_versions.get(version_string)
+	
 	_BUILTIN_COMPLETIONS_PATH = (
-		"res://addons/bbcode_edit.editor/completions_db/builtin_classes_"
-		+ GodotVersion.get_short_string()
+		_BUILTIN_COMPLETIONS_PATH_BEGINING
+		+ version_string
 		+ ".txt"
 	)
 	
