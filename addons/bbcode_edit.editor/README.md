@@ -7,7 +7,7 @@ in order to help format documentation comments.
 (May be extended to any CodeEdit in the future.[^editor_only])
 
 
-# Showcase
+## Showcase
 
 There are **shortcuts** to easily toggle some formattings:
 
@@ -29,7 +29,7 @@ Some useful **snippets** are included:
 ![A "Note" snippet, with the same formatting as the one used in the official documentation](/addons/bbcode_edit.editor/.assets_for_readme/snippet.gif)
 
 
-# Features / Roadmap
+## Features / Roadmap
 
 *Checked items are the implemented ones, unchecked are the ones in development.[^editor_only]*
 
@@ -107,7 +107,7 @@ Minimal version : Godot 4.3
 want to bother finding a workaround unless someone want to use the addon in this older version of Godot)
 
 
-# Development Status
+## Development Status
 
 <abbr title="Long Term Support">LTS</abbr>, no major updates. But the addon is really handy as-is.
 
