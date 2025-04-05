@@ -100,7 +100,7 @@ because this addon is (for now[^editor_only]) script-editor-only.
 
 ## Godot version
 
-Minimal version : Godot 4.3
+Minimal version: Godot 4.3
 
 [abondonned 4.2 port branch](https://github.com/xorblo-doitus/BBCodeEdit/tree/4.2.2-port)
 (The addon use a method that did not exist in the TextEditor class. I dont really
