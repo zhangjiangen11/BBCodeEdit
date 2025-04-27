@@ -259,6 +259,12 @@ static func get_builtin_classes() -> PackedStringArray:
 	return _BUILTIN_CLASSES
 
 
+static func get_type_and_class_completions() -> ClassCompletions:
+	var result: ClassCompletions = get_class_completions()
+	_add_type_completions(result)
+	return result
+
+
 static var icon_cache: Dictionary = {}
 static func get_class_completions() -> ClassCompletions:
 	var class_names: PackedStringArray = get_builtin_classes().duplicate()
@@ -319,6 +325,18 @@ static func fetch_builtin_classes() -> void:
 	else:
 		file.store_string("\n".join(_BUILTIN_CLASSES))
 		print_rich("[color=web_green]Filtered classes successfuly")
+
+
+static func _add_type_completions(completions: ClassCompletions) -> void:
+	var names: PackedStringArray = PackedStringArray()
+	var icons: Array[Texture2D] = []
+	
+	for type in TYPE_MAX:
+		names.append(type_string(type))
+		icons.append(AnyIcon.get_type_icon(type))
+	
+	completions.names = names + completions.names
+	completions.icons = icons + completions.icons
 
 
 class ClassCompletions:

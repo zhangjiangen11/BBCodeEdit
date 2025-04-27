@@ -241,7 +241,7 @@ func add_completion_options() -> void:
 			reference_icon,
 		)
 	
-	var class_completions := Completions.get_class_completions()
+	var class_completions := Completions.get_type_and_class_completions()
 	for i in len(class_completions.names):
 		var name_: String = class_completions.names[i]
 		add_code_completion_option(
@@ -469,7 +469,7 @@ func add_color_completions(chars_typed: int) -> void:
 
 ## Add completion for classes WITH SUBSCRIPT (aka it will add a dot at the end)
 func add_classes_completion() -> void:
-	var class_completions := Completions.get_class_completions()
+	var class_completions := Completions.get_type_and_class_completions()
 	for i in len(class_completions.names):
 		var name_: String = class_completions.names[i]
 		add_code_completion_option(
