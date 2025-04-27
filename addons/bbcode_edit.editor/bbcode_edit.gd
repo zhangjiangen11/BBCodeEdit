@@ -56,7 +56,7 @@ const CLASS_DOC_ENDERS: Array[String] = [
 	"class ",
 ]
 
-static var REGEX_PARENTHESES = RegEx.create_from_string(r"\(([^)]+)\)")
+static var REGEX_PARENTHESES := RegEx.create_from_string(r"\(([^)]+)\)")
 
 
 func _init() -> void:
@@ -166,7 +166,7 @@ func add_completion_options() -> void:
 	var describes_i: int = line_i
 	while is_in_comment(describes_i) != -1:
 		describes_i += 1
-	var describes: String = get_line(describes_i)
+	var describes: String = get_line_without_comment(describes_i)
 	
 	if check_parameter_completions(to_test, describes_i, describes):
 		return
@@ -310,11 +310,12 @@ func check_parameter_completions(to_test: String, describes_i: int, describes: S
 			
 			if ")" not in describes:
 				var next_line_i: int = describes_i + 1
-				var next_line: String = get_line(next_line_i)
+				var next_line: String = get_line_without_comment(next_line_i)
+				
 				while ")" not in next_line:
 					describes += next_line
 					next_line_i += 1
-					next_line = get_line(next_line_i)
+					next_line = get_line_without_comment(next_line_i)
 				describes += next_line
 			#print_rich("Describes: [color=purple][code]", describes)
 			
@@ -724,6 +725,14 @@ func toggle_tag(tag: String) -> void:
 	
 	end_multicaret_edit()
 	end_complex_operation()
+
+
+func get_line_without_comment(line_i: int) -> String:
+	var line: String = get_line(line_i)
+	var comment_start: int = line.find("#")
+	if comment_start != -1:
+		line = line.left(comment_start)
+	return line
 
 
 func _confirm_code_completion(replace: bool = false) -> void:
