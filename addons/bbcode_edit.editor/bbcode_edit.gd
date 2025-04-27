@@ -232,7 +232,7 @@ func add_completion_options() -> void:
 			reference_icon,
 		)
 	
-	if describes.begins_with("func "):
+	if describes.begins_with("func") or describes.begins_with("static func"):
 		add_code_completion_option(
 			CodeEdit.KIND_PLAIN_TEXT,
 			"[param name]",
@@ -305,7 +305,7 @@ func check_parameter_completions(to_test: String, describes_i: int, describes: S
 	
 	match parameters[0]:
 		"param":
-			if not describes.begins_with("func "):
+			if not (describes.begins_with("func") or describes.begins_with("static func")):
 				return false
 			
 			if ")" not in describes:
