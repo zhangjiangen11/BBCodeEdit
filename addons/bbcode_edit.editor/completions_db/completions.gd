@@ -264,7 +264,7 @@ static func get_class_completions() -> ClassCompletions:
 	var class_names: PackedStringArray = get_builtin_classes().duplicate()
 	var icons: Array[Texture2D] = []
 	for class_name_ in class_names:
-		icons.append(Scraper.get_builtin_class_icon(class_name_))
+		icons.append(AnyIcon.get_builtin_class_icon(class_name_))
 	
 	var classes: Array[Dictionary] = ProjectSettings.get_global_class_list()
 	var class_to_icon: Dictionary = {}
@@ -293,7 +293,7 @@ static func get_class_completions() -> ClassCompletions:
 					icons.append(icon_cache[class_name_])
 					break
 			if len(icons) != len(class_names):
-				icon_cache[class_name_] = Scraper.get_builtin_class_icon(icon_class)
+				icon_cache[class_name_] = AnyIcon.get_builtin_class_icon(icon_class)
 				icons.append(icon_cache[class_name_])
 	
 	return ClassCompletions.new(

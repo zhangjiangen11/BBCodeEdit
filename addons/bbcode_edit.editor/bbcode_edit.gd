@@ -97,28 +97,28 @@ func add_completion_options() -> void:
 			"@deprecated" + ANNOTATION_SUFFIX_CHAR,
 			"deprecated\n## ",
 			get_theme_color(&"font-color"),
-			Scraper.get_icon(&"StatusError"),
+			AnyIcon.get_icon(&"StatusError"),
 		)
 		add_code_completion_option(
 			CodeEdit.KIND_PLAIN_TEXT,
 			"@deprecated: Some explaination" + ANNOTATION_SUFFIX_CHAR,
 			"deprecated: ",
 			get_theme_color(&"font-color"),
-			Scraper.get_icon(&"StatusError"),
+			AnyIcon.get_icon(&"StatusError"),
 		)
 		add_code_completion_option(
 			CodeEdit.KIND_PLAIN_TEXT,
 			"@experimental" + ANNOTATION_SUFFIX_CHAR,
 			"experimental\n## ",
 			get_theme_color(&"font-color"),
-			Scraper.get_icon(&"NodeWarning"),
+			AnyIcon.get_icon(&"NodeWarning"),
 		)
 		add_code_completion_option(
 			CodeEdit.KIND_PLAIN_TEXT,
 			"@experimental: Some explaination" + ANNOTATION_SUFFIX_CHAR,
 			"experimental: ",
 			get_theme_color(&"font-color"),
-			Scraper.get_icon(&"NodeWarning"),
+			AnyIcon.get_icon(&"NodeWarning"),
 		)
 		
 		var class_comment_end_line: int = 0
@@ -135,14 +135,14 @@ func add_completion_options() -> void:
 				"@tutorial: https://example.com" + ANNOTATION_SUFFIX_CHAR,
 				"tutorial: https://",
 				get_theme_color(&"font-color"),
-				Scraper.get_icon(&"ExternalLink"),
+				AnyIcon.get_icon(&"ExternalLink"),
 			)
 			add_code_completion_option(
 				CodeEdit.KIND_PLAIN_TEXT,
 				"@tutorial(Title): https://example.com" + ANNOTATION_SUFFIX_CHAR,
 				"tutorial(|): https://",
 				get_theme_color(&"font-color"),
-				Scraper.get_icon(&"ExternalLink"),
+				AnyIcon.get_icon(&"ExternalLink"),
 			)
 		
 		update_code_completion_options(true)
@@ -179,21 +179,21 @@ func add_completion_options() -> void:
 			"Note:",
 			"b]Note:[/b] ",
 			font_color,
-			Scraper.get_icon(&"TextMesh"),
+			AnyIcon.get_icon(&"TextMesh"),
 		)
 		add_code_completion_option(
 			CodeEdit.KIND_PLAIN_TEXT,
 			"Warning:",
 			"b]Warning:[/b] ",
 			font_color,
-			Scraper.get_icon(&"TextMesh"),
+			AnyIcon.get_icon(&"TextMesh"),
 		)
 		add_code_completion_option(
 			CodeEdit.KIND_PLAIN_TEXT,
 			"Example:",
 			"b]Example:[/b] ",
 			font_color,
-			Scraper.get_icon(&"TextMesh"),
+			AnyIcon.get_icon(&"TextMesh"),
 		)
 	
 	# TODO only propose valid tags
@@ -222,7 +222,7 @@ func add_completion_options() -> void:
 	for completion in reference_completions:
 		reference_displays.append(_bracket(completion.trim_suffix("|") + "Class.name"))
 	
-	var reference_icon: Texture2D = Scraper.get_reference_icon()
+	var reference_icon: Texture2D = AnyIcon.get_icon(&"Help")
 	for i in reference_completions.size():
 		add_code_completion_option(
 			CodeEdit.KIND_PLAIN_TEXT,
@@ -329,9 +329,9 @@ func check_parameter_completions(to_test: String, describes_i: int, describes: S
 					parameter + REFERENCE_END_SUFFIX_CHAR,
 					parameter + "||",
 					get_theme_color(&"font_color"),
-					Scraper.get_icon(&"Variant")
+					AnyIcon.get_icon(&"Variant")
 					if param_parts.size() == 1 else
-					Scraper.try_get_icon(param_parts[1].split("=", true, 1)[0].strip_edges(), &"Variant")
+					AnyIcon.try_get_icon(param_parts[1].split("=", true, 1)[0].strip_edges(), &"Variant")
 				)
 			
 			update_code_completion_options(true)
@@ -439,13 +439,13 @@ func add_hex_color(hex: String, include_prefix: bool = false) -> void:
 		HEX_PREFIX + hex + " ",
 		HEX_PREFIX + hex if include_prefix else hex,
 		get_theme_color(&"font_color"),
-		Scraper.get_color_icon(),
+		AnyIcon.get_icon(&"Color"),
 		Color.html(hex),
 	)
 
 
 func add_color_completions(chars_typed: int) -> void:
-	var icon = Scraper.get_color_icon()
+	var icon = AnyIcon.get_icon(&"Color")
 	for color in Completions.COLORS:
 		add_code_completion_option(
 			CodeEdit.KIND_PLAIN_TEXT,
@@ -512,10 +512,7 @@ func add_members(members: Array[Dictionary]) -> void:
 
 
 func get_icon_for_member(member: Dictionary, fallback: StringName = &"MemberProperty") -> Texture2D:
-	if member["type"] == TYPE_OBJECT:
-		return Scraper.get_class_icon(member["class_name"], fallback)
-	
-	return Scraper.get_builtin_type_icon(member["type"], fallback)
+	return AnyIcon.get_property_icon_from_dict(member, fallback)
 
 
 func add_method_completion_from_script(class_: Script) -> void:
@@ -543,7 +540,7 @@ func get_icon_for_method(method: Dictionary) -> Texture2D:
 	var returned: Dictionary = method["return"]
 	
 	if returned["type"] == TYPE_NIL:
-		return Scraper.get_icon(&"MemberMethod")
+		return AnyIcon.get_icon(&"MemberMethod")
 	
 	return get_icon_for_member(returned, &"Function")
 
@@ -586,7 +583,7 @@ func add_constants(constants: Dictionary) -> void:
 			display_text,
 			constant + "||",
 			get_theme_color(&"font-color"),
-			Scraper.get_type_icon(value, &"MemberConstant"),
+			AnyIcon.get_type_icon(value, &"MemberConstant"),
 			value
 		)
 
@@ -602,7 +599,7 @@ func add_signal_completion_from_class_name(class_: StringName) -> void:
 
 
 func add_signals(signals: Array[Dictionary]) -> void:
-	var icon: Texture2D = Scraper.get_icon(&"MemberSignal")
+	var icon: Texture2D = AnyIcon.get_icon(&"MemberSignal")
 	for signal_ in signals:
 		add_code_completion_option(
 			CodeEdit.KIND_SIGNAL,
@@ -639,7 +636,7 @@ func add_enum_completion_from_class_name(class_: StringName) -> void:
 
 
 func add_enums(enums: PackedStringArray) -> void:
-	var icon: Texture2D = Scraper.get_icon(&"Enum")
+	var icon: Texture2D = AnyIcon.get_icon(&"Enum")
 	for enum_ in enums:
 		add_code_completion_option(
 			CodeEdit.KIND_ENUM,
@@ -763,12 +760,12 @@ func _confirm_code_completion(replace: bool = false) -> void:
 	var suffix: String = display_text[-1]
 	var kind: CompletionKind = (
 		CompletionKind.FORMATTING if icon == BBCODE_COMPLETION_ICON else
-		CompletionKind.COLOR if icon == Scraper.get_color_icon() else
+		CompletionKind.COLOR if icon == AnyIcon.get_icon(&"Color") else
 		CompletionKind.CLASS_REFERENCE if prefix == CLASS_REFERENCE_PREFIX_CHAR else
 		CompletionKind.REFERENCE_START if suffix == REFERENCE_START_SUFFIX_CHAR else
 		CompletionKind.REFERENCE_END if suffix == REFERENCE_END_SUFFIX_CHAR else
 		CompletionKind.ANNOTATION if suffix == ANNOTATION_SUFFIX_CHAR else
-		CompletionKind.REFERENCING_TAG if icon == Scraper.get_reference_icon() else
+		CompletionKind.REFERENCING_TAG if icon == AnyIcon.get_icon(&"Help") else
 		0
 	)
 	

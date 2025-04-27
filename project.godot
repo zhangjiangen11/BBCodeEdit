@@ -8,10 +8,6 @@
 
 config_version=5
 
-[addons]
-
-bbcode_edit/editor/dont_ask_to_fetch_builtin_classes=false
-
 [application]
 
 config/name="BBCodeEdit"
@@ -22,7 +18,7 @@ config/icon="res://icon.png"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/bbcode_edit.editor/plugin.cfg")
+enabled=PackedStringArray("res://addons/bbcode_edit.editor/plugin.cfg", "res://addons/explore-editor-theme/plugin.cfg")
 
 [input]
 

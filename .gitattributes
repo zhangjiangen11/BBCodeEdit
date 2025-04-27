@@ -7,3 +7,5 @@
 /addons/bbcode_edit.editor     !export-ignore
 /addons/bbcode_edit.editor/**  !export-ignore
 /addons/bbcode_edit.editor/.assets_for_readme/*.mp4   export-ignore
+/addons/any_icon.editor        !export-ignore
+/addons/any_icon.editor/**     !export-ignore
