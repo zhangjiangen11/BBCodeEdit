@@ -56,7 +56,7 @@ const CLASS_DOC_ENDERS: Array[String] = [
 	"class ",
 ]
 
-static var REGEX_PARENTHESES := RegEx.create_from_string(r"\(([^)]+)\)")
+static var REGEX_PARENTHESES := RegEx.create_from_string(r"\(([^)]*)\)")
 
 
 func _init() -> void:
@@ -319,8 +319,24 @@ func check_parameter_completions(to_test: String, describes_i: int, describes: S
 				describes += next_line
 			#print_rich("Describes: [color=purple][code]", describes)
 			
+			var inside_parentheses: String = REGEX_PARENTHESES\
+					.search(describes)\
+					.get_string()\
+					.trim_prefix("(")\
+					.trim_suffix(")")
+			
+			if inside_parentheses.is_empty():
+				add_code_completion_option(
+					CodeEdit.KIND_PLAIN_TEXT,
+					"<No parameter found, please report if the method has parameters>",
+					"<No parameter found, please report if the method has parameters>>",
+					get_theme_color(&"font_color"),
+					AnyIcon.get_icon(&"StatusError")
+				)
+				return true
+			
 			for part in (
-				REGEX_PARENTHESES.search(describes).get_string().trim_prefix("(").trim_suffix(")").split(",")
+				inside_parentheses.split(",")
 			):
 				var param_parts := part.split(":", true, 1)
 				var parameter: String = param_parts[0].strip_edges()
